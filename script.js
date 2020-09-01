@@ -63,7 +63,7 @@ function storeBookmark(e) {
 }
 
 function buildBookmarks() {
-    bookmarksContainer.textContent = '';
+  bookmarksContainer.textContent = '';
   bookmarks.forEach((bookmark) => {
     createItem(bookmark);
   });
@@ -131,7 +131,7 @@ function fetchBookMarks() {
 
     localStorage.setItem(bookmarksKey, JSON.stringify(bookmarks));
   }
-  
+
   buildBookmarks();
 }
 
