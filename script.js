@@ -6,6 +6,8 @@ const websiteNameEl = document.getElementById('website-name');
 const webstieUrlEl = document.getElementById('website-url');
 const bookmarksContainer = document.getElementById('bookmarks-container');
 
+const bookmarksKey = 'bookmarks';
+
 let bookmarks = [];
 
 function showModal() {
@@ -54,7 +56,7 @@ function storeBookmark(e) {
     url: urlValue,
   };
   bookmarks.push(bookmark);
-  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+  localStorage.setItem(bookmarksKey, JSON.stringify(bookmarks));
   fetchBookMarks();
   bookmarkFrom.reset();
   webstieUrlEl.focus();
@@ -116,7 +118,7 @@ function createFavicon(url) {
 }
 
 function fetchBookMarks() {
-  if (localStorage.getItem('bookmarks')) {
+  if (localStorage.getItem(bookmarksKey)) {
     bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
   } else {
     bookmarks = [
@@ -126,9 +128,19 @@ function fetchBookMarks() {
       },
     ];
 
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    localStorage.setItem(bookmarksKey, JSON.stringify(bookmarks));
   }
+  bookmarksContainer.textContent = '';
   buildBookmarks();
+}
+
+function deleteBookmark(url) {
+  bookmarks.forEach((bookmark, i) => {
+    if (bookmark.url === url) bookmarks.splice(i, 1);
+  });
+
+  localStorage.setItem(bookmarksKey, JSON.stringify(bookmarks));
+  fetchBookMarks();
 }
 
 bookmarkFrom.addEventListener('submit', storeBookmark);
